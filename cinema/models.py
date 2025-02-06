@@ -9,7 +9,7 @@ class Actor(models.Model):
         verbose_name_plural = "actors"
 
     def __str__(self) -> str:
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
 
 class Genre(models.Model):
@@ -37,8 +37,8 @@ class CinemaHall(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    actors = models.ManyToManyField(Actor, related_name='movies')
-    genres = models.ManyToManyField(Genre, related_name='movies')
+    actors = models.ManyToManyField(Actor, related_name="movies")
+    genres = models.ManyToManyField(Genre, related_name="movies")
     duration = models.IntegerField()
 
     class Meta:
