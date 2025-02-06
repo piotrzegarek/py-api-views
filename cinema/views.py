@@ -7,7 +7,9 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 from cinema.models import Actor, CinemaHall, Genre, Movie
-from cinema.serializers import ActorSerializer, CinemaHallSerializer, GenreSerializer, MovieSerializer
+from cinema.serializers import (
+    ActorSerializer, CinemaHallSerializer, GenreSerializer, MovieSerializer
+)
 
 
 class GenreList(APIView):
