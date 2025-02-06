@@ -37,8 +37,8 @@ class CinemaHall(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    actors = models.ManyToManyField(Actor, related_name="movies")
-    genres = models.ManyToManyField(Genre, related_name="movies")
+    actors = models.ManyToManyField(Actor, blank=True, related_name="movies")
+    genres = models.ManyToManyField(Genre, blank=True, related_name="movies")
     duration = models.IntegerField()
 
     class Meta:

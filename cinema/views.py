@@ -6,8 +6,8 @@ from rest_framework import status
 
 from django.shortcuts import get_object_or_404
 
-from .models import Actor, CinemaHall, Genre
-from .serializers import ActorSerializer, CinemaHallSerializer, GenreSerializer
+from cinema.models import Actor, CinemaHall, Genre, Movie
+from cinema.serializers import ActorSerializer, CinemaHallSerializer, GenreSerializer, MovieSerializer
 
 
 class GenreList(APIView):
@@ -53,7 +53,7 @@ class GenreDetail(APIView):
     def delete(self, request: Request, pk: int) -> Response:
         genre = get_object_or_404(Genre, pk=pk)
         genre.delete()
-        return Response({"status": "success"}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ActorList(
@@ -72,24 +72,24 @@ class ActorList(
 
 
 class ActorDetail(
+    generics.GenericAPIView,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    generics.GenericAPIView
 ):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-    def get(self, request: Request, *args, **kwargs) -> Response:
+    def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
 
-    def put(self, request: Request, *args, **kwargs) -> Response:
+    def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-    def patch(self, request: Request, *args, **kwargs) -> Response:
+    def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
 
-    def delete(self, request: Request, *args, **kwargs) -> Response:
+    def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 
 
@@ -106,5 +106,5 @@ class CinemaHallViewSet(
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
+    queryset = Movie.objects.all().prefetch_related("actors", "genres")
+    serializer_class = MovieSerializer

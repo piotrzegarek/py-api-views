@@ -1,13 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import (
+from cinema.views import (
+    GenreList,
+    GenreDetail,
     ActorList,
     ActorDetail,
     CinemaHallViewSet,
-    GenreList,
-    GenreDetail,
-    MovieViewSet,
+    MovieViewSet
 )
 
 router = DefaultRouter()
@@ -35,11 +35,11 @@ urlpatterns = [
     path("genres/<int:pk>/", GenreDetail.as_view(), name="genre-detail"),
 
     path("actors/", ActorList.as_view(), name="actor-list"),
-    path("actors/<int:pk>", ActorDetail.as_view(), name="actor-detail"),
+    path("actors/<int:pk>/", ActorDetail.as_view(), name="actor-detail"),
 
     path("cinema_halls/", cinema_hall_list, name="cinema-hall-list"),
     path(
-        "cinema_halls/<int:pk>",
+        "cinema_halls/<int:pk>/",
         cinema_hall_detail,
         name="cinema-hall-detail"),
 ]
